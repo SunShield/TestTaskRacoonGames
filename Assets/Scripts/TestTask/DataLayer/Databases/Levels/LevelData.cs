@@ -8,6 +8,6 @@ namespace TestTask.DataLayer.Databases.Levels
     {
         public string Name;
         public Level Prefab;
-        // some metadata here
+        public string LaunchedEntityKey;
     }
 }

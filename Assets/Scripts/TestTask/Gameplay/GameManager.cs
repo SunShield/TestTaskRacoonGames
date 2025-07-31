@@ -1,4 +1,5 @@
-﻿using TestTask.Gameplay.Levels;
+﻿using TestTask.Gameplay.Launching;
+using TestTask.Gameplay.Levels;
 using TestTask.Service.Classes;
 
 namespace TestTask.Gameplay
@@ -10,10 +11,11 @@ namespace TestTask.Gameplay
             StartGame();
         }
         
-        public void StartGame()
+        public async void StartGame()
         {
             LevelManager.Instance.LoadLevel(Constants.Levels.TestLevel);
-            LevelManager.Instance.StartLevel();
+            await LevelManager.Instance.StartLevel();
+            EntityLauncher.Instance.StartLaunching();
         }
 
         public void RestartGame()

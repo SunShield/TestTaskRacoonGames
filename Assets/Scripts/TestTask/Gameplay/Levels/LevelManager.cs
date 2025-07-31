@@ -1,5 +1,7 @@
-﻿using TestTask.DataLayer;
+﻿using Cysharp.Threading.Tasks;
+using TestTask.DataLayer;
 using TestTask.DataLayer.Databases.Levels;
+using TestTask.Gameplay.Launching;
 using TestTask.Service.Classes;
 using UnityEngine;
 
@@ -17,9 +19,10 @@ namespace TestTask.Gameplay.Levels
             // using local db for tests; consider async is addressables will be used
             LevelData = GameDataProvider.Instance.LevelDatabase.LevelsDictionary[levelName];
             LevelInstance = Instantiate(LevelData.Prefab, _levelOrigin);
+            EntityLauncher.Instance.Init(LevelInstance, LevelData.LaunchedEntityKey);
         }
 
-        public async void StartLevel()
+        public async UniTask StartLevel()
         {
             await LevelInstance.StartLevel();
         }

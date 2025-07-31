@@ -327,6 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a7296ee10b1c401f97e0d0bbdabd5015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Collider>k__BackingField: {fileID: 5047931102619039919}
   <Rigidbody>k__BackingField: {fileID: 5617036576167011728}
   _visuals: {fileID: 5990119833355279359}
 --- !u!114 &5990119833355279359

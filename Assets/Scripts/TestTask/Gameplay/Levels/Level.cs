@@ -9,6 +9,7 @@ namespace TestTask.Gameplay.Levels
         // better approach would be to add those to LevelData through Odin'n polymirphous serialization
         // but for now, it's OK
         [SerializeField] private LevelEvents _levelEvents;
+        [field: SerializeField] public BoxCollider CubeSpawnZone { get;  private set; }
 
         public async UniTask StartLevel()
         {

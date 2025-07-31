@@ -167,6 +167,8 @@ MonoBehaviour:
   <EntityPrefabDatabase>k__BackingField: {fileID: 11400000, guid: ad50e54ae1ab69b4db9c291319debbe8, type: 2}
   <ColorsDatabase>k__BackingField: {fileID: 11400000, guid: dad0a86111f4d6444ae784fce5132cd7, type: 2}
   <LevelDatabase>k__BackingField: {fileID: 11400000, guid: 7b97e72039596d74995f846b4af65de6, type: 2}
+  <LaunchSettings>k__BackingField: {fileID: 11400000, guid: 0f81025becccd5043870e8a47a39a5cd, type: 2}
+  <MergeSettings>k__BackingField: {fileID: 11400000, guid: e158fe0912d367f448241da6a90363f3, type: 2}
 --- !u!1 &1878889923
 GameObject:
   m_ObjectHideFlags: 0
