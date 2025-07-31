@@ -1,5 +1,6 @@
 ﻿using TestTask.Gameplay.Entities.Visuals;
 using TestTask.Gameplay.Merging;
+using TestTask.Sounds;
 using UnityEngine;
 
 namespace TestTask.Gameplay.Entities
@@ -20,9 +21,12 @@ namespace TestTask.Gameplay.Entities
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (!collision.gameObject.TryGetComponent<EntityWithNumber>(out EntityWithNumber another)) return;
+            if (!collision.gameObject.TryGetComponent(out EntityWithNumber another)) return;
             
-            MergeManager.Instance.RegisterMergeAttempt(this, another);
+            var mergeResult = MergeManager.Instance.RegisterMergeAttempt(this, another);
+            SoundManager.Instance.PlaySfx(!mergeResult 
+                ? Constants.Sounds.CubeHit 
+                : Constants.Sounds.Merge);
         }
     }
 }

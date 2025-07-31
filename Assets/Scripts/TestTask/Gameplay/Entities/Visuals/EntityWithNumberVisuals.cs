@@ -10,6 +10,9 @@ namespace TestTask.Gameplay.Entities.Visuals
     {
         [SerializeField] private MeshRenderer _renderer;
         [SerializeField] private List<TextMeshPro> _numberTexts;
+        
+        private MaterialPropertyBlock _propertyBlock;
+        private Coroutine _flashRoutine;
 
         public void Setup(int power)
         {
@@ -25,9 +28,9 @@ namespace TestTask.Gameplay.Entities.Visuals
         private void SetColor(int power)
         {
             var color = GetColorByPower(power);
-            var block = new MaterialPropertyBlock();
-            block.SetColor("_BaseColor", color);
-            _renderer.SetPropertyBlock(block);
+            _propertyBlock ??= new MaterialPropertyBlock();
+            _propertyBlock.SetColor("_BaseColor", color);
+            _renderer.SetPropertyBlock(_propertyBlock);
         }
 
         private Color GetColorByPower(int power)

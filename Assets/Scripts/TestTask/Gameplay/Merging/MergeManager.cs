@@ -12,17 +12,18 @@ namespace TestTask.Gameplay.Merging
         private float PostMergePushStrength => GameDataProvider.Instance.MergeSettings.PostMergePushStrength;
         private const float HorizontalComponentMultiplier = 0.25f;
         
-        public void RegisterMergeAttempt(EntityWithNumber entity, EntityWithNumber another)
+        public bool RegisterMergeAttempt(EntityWithNumber entity, EntityWithNumber another)
         {
-            if (!EntityLauncher.Instance.IsLaunching) return;
-            if (entity.Power != another.Power) return;
-            if (entity.Rigidbody.linearVelocity.magnitude < MergeVelocityThreshold) return;
+            if (!EntityLauncher.Instance.IsLaunching) return false;
+            if (entity.Power != another.Power) return false;
+            if (entity.Rigidbody.linearVelocity.magnitude < MergeVelocityThreshold) return false;
             
             entity.Rigidbody.linearVelocity = Vector3.zero;
             Destroy(another.gameObject);
             entity.SetPower(entity.Power + 1);
             
             DoPostMergeJump(entity);
+            return true;
         }
 
         private void DoPostMergeJump(EntityWithNumber entity)

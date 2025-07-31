@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae841caaea474531a12698e3625dd476, type: 3}
+  m_Name: SoundsDatabase
+  m_EditorClassIdentifier: 
+  _sounds:
+  - Name: CubeHit
+    Volume: 0.5
+    Clip: {fileID: 8300000, guid: d9f884c571de3e14ab0c91d50e3b2b92, type: 3}
+  - Name: Merge
+    Volume: 0.5
+    Clip: {fileID: 8300000, guid: 1b6e051d4a3a3014293d4e777b66b020, type: 3}

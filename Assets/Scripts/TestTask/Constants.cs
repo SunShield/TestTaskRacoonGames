@@ -16,5 +16,11 @@
         {
             public const string BasicCube = "BasicCube";
         }
+        
+        public class Sounds
+        {
+            public const string CubeHit = "CubeHit";
+            public const string Merge = "Merge";
+        }
     }
 }

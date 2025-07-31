@@ -57,7 +57,7 @@ namespace TestTask.Gameplay.Launching
             return new Vector3(randomX, entityCenterHeight + ShiftY, randomZ);
         }
 
-        //  maybe later do it per-leve, but for now generalized are OK 
+        //  maybe later do it per-level, but for now generalized is OK 
         private int GetRandomPower()
         {
             var launchSettings = GameDataProvider.Instance.LaunchSettings;
@@ -68,7 +68,7 @@ namespace TestTask.Gameplay.Launching
                 if (random < weight) return i + 1;
             }
             
-            return 1;
+            return launchSettings.PowerWeights.Count;
         }
         
         private void Update()
