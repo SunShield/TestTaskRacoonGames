@@ -9,12 +9,14 @@ namespace TestTask.Gameplay.Merging
     public class MergeManager : MonoSingleton<MergeManager>
     {
         private float MergeVelocityThreshold => GameDataProvider.Instance.MergeSettings.MergeVelocityThreshold;
+        private float PostMergePushStrength => GameDataProvider.Instance.MergeSettings.PostMergePushStrength;
+        private const float HorizontalComponentMultiplier = 0.25f;
         
         public void RegisterMergeAttempt(EntityWithNumber entity, EntityWithNumber another)
         {
             if (!EntityLauncher.Instance.IsLaunching) return;
             if (entity.Power != another.Power) return;
-            //if (entity.Rigidbody.linearVelocity.magnitude < MergeVelocityThreshold) return;
+            if (entity.Rigidbody.linearVelocity.magnitude < MergeVelocityThreshold) return;
             
             entity.Rigidbody.linearVelocity = Vector3.zero;
             Destroy(another.gameObject);
@@ -30,7 +32,10 @@ namespace TestTask.Gameplay.Merging
                                 Random.insideUnitCircle.y * entity.transform.forward;
 
             var normalized = randomDir.normalized;
-            entity.Rigidbody.AddForce(new Vector3(normalized.x * 1.5f, normalized.y * 6f, normalized.z * 1.5f), 
+            entity.Rigidbody.AddForce(new Vector3(
+                    normalized.x * PostMergePushStrength * HorizontalComponentMultiplier, 
+                    normalized.y * PostMergePushStrength, 
+                    normalized.z * PostMergePushStrength * HorizontalComponentMultiplier), 
                 ForceMode.Impulse);
         }
     }

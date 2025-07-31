@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2dff07d8b6a342a0924f61e7a3463382, type: 3}
   m_Name: MergeSettings
   m_EditorClassIdentifier: 
-  MergeVelocityThreshold: 5
+  MergeVelocityThreshold: 2
+  PostMergePushStrength: 6

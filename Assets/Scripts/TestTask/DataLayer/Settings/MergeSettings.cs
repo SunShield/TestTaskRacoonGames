@@ -6,5 +6,6 @@ namespace TestTask.DataLayer.Settings
     public class MergeSettings : ScriptableObject
     {
         public float MergeVelocityThreshold = 5f;
+        public float PostMergePushStrength = 6f;
     }
 }
