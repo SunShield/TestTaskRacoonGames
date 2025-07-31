@@ -6,5 +6,7 @@ namespace TestTask.Gameplay.Entities
     {
         [field: SerializeField] public Collider Collider { get; set; }
         [field: SerializeField] public Rigidbody Rigidbody { get; private set; }
+
+        public virtual bool CanMergeWith(BaseEntity other) => true;
     }
 }

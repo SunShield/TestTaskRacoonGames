@@ -28,5 +28,12 @@ namespace TestTask.Gameplay.Entities
                 ? Constants.Sounds.CubeHit 
                 : Constants.Sounds.Merge);
         }
+
+        public override bool CanMergeWith(BaseEntity other)
+        {
+            var otherTyped = other as EntityWithNumber;
+            if (otherTyped == null) return false;
+            return Power == otherTyped.Power;
+        }
     }
 }

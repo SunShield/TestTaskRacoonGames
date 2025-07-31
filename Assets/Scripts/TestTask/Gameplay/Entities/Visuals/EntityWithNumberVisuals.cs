@@ -22,7 +22,7 @@ namespace TestTask.Gameplay.Entities.Visuals
 
         private void SetTexts(int power)
         {
-            _numberTexts.ForEach(t => t.text = ScoreManager.Instance.GetScoreByPower(power).ToString());
+            _numberTexts.ForEach(t => t.text = ScoreManager.Instance.GetScoreByPower(power + 1).ToString());
         }
 
         private void SetColor(int power)

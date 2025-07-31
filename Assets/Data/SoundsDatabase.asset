@@ -19,3 +19,6 @@ MonoBehaviour:
   - Name: Merge
     Volume: 0.5
     Clip: {fileID: 8300000, guid: 1b6e051d4a3a3014293d4e777b66b020, type: 3}
+  - Name: CubeLaunch
+    Volume: 0.5
+    Clip: {fileID: 8300000, guid: 0c4197aa9bcfa1342b350ffc05eaded9, type: 3}

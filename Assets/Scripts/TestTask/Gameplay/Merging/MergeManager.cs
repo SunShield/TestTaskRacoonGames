@@ -1,8 +1,10 @@
-﻿using TestTask.DataLayer;
+﻿using System;
+using TestTask.DataLayer;
 using TestTask.Gameplay.Entities;
 using TestTask.Gameplay.Launching;
 using TestTask.Service.Classes;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace TestTask.Gameplay.Merging
 {
@@ -15,13 +17,16 @@ namespace TestTask.Gameplay.Merging
         public bool RegisterMergeAttempt(EntityWithNumber entity, EntityWithNumber another)
         {
             if (!EntityLauncher.Instance.IsLaunching) return false;
-            if (entity.Power != another.Power) return false;
+            if (!entity.CanMergeWith(another)) return false;
             if (entity.Rigidbody.linearVelocity.magnitude < MergeVelocityThreshold) return false;
+
+            var powerCached = entity.Power;
             
             entity.Rigidbody.linearVelocity = Vector3.zero;
             Destroy(another.gameObject);
             entity.SetPower(entity.Power + 1);
             
+            OnEntityMerged?.Invoke(entity, powerCached);
             DoPostMergeJump(entity);
             return true;
         }
@@ -39,5 +44,7 @@ namespace TestTask.Gameplay.Merging
                     normalized.z * PostMergePushStrength * HorizontalComponentMultiplier), 
                 ForceMode.Impulse);
         }
+
+        public event Action<EntityWithNumber, int> OnEntityMerged;
     }
 }

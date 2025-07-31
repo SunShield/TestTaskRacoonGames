@@ -3,6 +3,7 @@ using TestTask.Gameplay.Entities;
 using TestTask.Gameplay.Entities.Spawning;
 using TestTask.Gameplay.Levels;
 using TestTask.Service.Classes;
+using TestTask.Sounds;
 using UnityEngine;
 
 namespace TestTask.Gameplay.Launching
@@ -111,6 +112,7 @@ namespace TestTask.Gameplay.Launching
         private void Launch()
         {
             _currentEntityToLaunch.Rigidbody.AddForce(Vector3.forward * LaunchForce, ForceMode.Impulse);
+            SoundManager.Instance.PlaySfx(Constants.Sounds.CubeLaunch);
         }
         
         private void AdvanceLaunchTimer() => _launchDelayTimer = Mathf.Max(_launchDelayTimer- Time.deltaTime, 0f);

@@ -21,6 +21,7 @@
         {
             public const string CubeHit = "CubeHit";
             public const string Merge = "Merge";
+            public const string CubeLaunch = "CubeLaunch";
         }
     }
 }
