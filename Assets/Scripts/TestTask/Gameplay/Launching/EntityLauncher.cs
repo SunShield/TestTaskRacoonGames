@@ -40,26 +40,25 @@ namespace TestTask.Gameplay.Launching
             IsLaunching = true;
         }
 
-        private async void PrepareLaunchableEntity()
+        private async void PrepareLaunchableEntity(Touch touch)
         {
             // assuming entity launched is always at least EntityWithNumber
             _currentEntityToLaunch = EntitySpawner.Instance.SpawnEntity<EntityWithNumber>(
-                _launchedEntityKey, GetRandomSpawnPoint(), Quaternion.identity);
+                _launchedEntityKey, Vector3.zero, Quaternion.identity);
+            var worldPoint = GetCubePos(touch, out var pos);
+            _currentEntityToLaunch.transform.position = new Vector3(worldPoint.x, pos.y, pos.z);
+            
             var randomPower = GetRandomPower();
             _currentEntityToLaunch.SetPower(randomPower);
         }
 
-        private Vector3 GetRandomSpawnPoint()
+        private Vector3 GetCubePos(Touch touch, out Vector3 pos)
         {
-            var entityCenterHeight = LaunchedEntity.Collider.bounds.size.y / 2;
-            
-            var randomZoneX = _cubeSpawnZone.size.x / 2;
-            var randomZoneZ = _cubeSpawnZone.size.z / 2;
-            
-            var randomX = _cubeSpawnZone.center.x + Random.Range(-randomZoneX, randomZoneX);
-            var randomZ = _cubeSpawnZone.center.z + Random.Range(-randomZoneZ, randomZoneZ);
-            
-            return new Vector3(randomX, entityCenterHeight + ShiftY, randomZ);
+            var screenPoint = new Vector3(touch.position.x, touch.position.y, 
+                _camera.WorldToScreenPoint(_currentEntityToLaunch.transform.position).z);
+            var worldPoint = _camera.ScreenToWorldPoint(screenPoint);
+            pos = _currentEntityToLaunch.transform.position;
+            return worldPoint;
         }
 
         //  maybe later do it per-level, but for now generalized is OK 
@@ -95,7 +94,7 @@ namespace TestTask.Gameplay.Launching
             switch (touch.phase)
             {
                 case TouchPhase.Began:
-                    PrepareLaunchableEntity();
+                    PrepareLaunchableEntity(touch);
                     break;
 
                 case TouchPhase.Moved:
@@ -112,7 +111,7 @@ namespace TestTask.Gameplay.Launching
 
         private void TryLaunch()
         {
-            if (CooldowningLaunch) return;
+            if (CooldowningLaunch || _currentEntityToLaunch == null) return;
             
             _launchDelayTimer = LaunchDelay;
             Launch();
@@ -122,19 +121,16 @@ namespace TestTask.Gameplay.Launching
         {
             _currentEntityToLaunch.Rigidbody.AddForce(Vector3.forward * LaunchForce, ForceMode.Impulse);
             SoundManager.Instance.PlaySfx(Constants.Sounds.CubeLaunch);
+            _currentEntityToLaunch = null;
         }
         
         private void AdvanceLaunchTimer() => _launchDelayTimer = Mathf.Max(_launchDelayTimer- Time.deltaTime, 0f);
         
         private void MoveCubeWithFinger(Touch touch)
         {
-            if (_currentEntityToLaunch == null)
-                return;
+            if (_currentEntityToLaunch == null) return;
 
-            var screenPoint = new Vector3(touch.position.x, touch.position.y, 
-                _camera.WorldToScreenPoint(_currentEntityToLaunch.transform.position).z);
-            var worldPoint = _camera.ScreenToWorldPoint(screenPoint);
-            var pos = _currentEntityToLaunch.transform.position;
+            var worldPoint = GetCubePos(touch, out var pos);
             _currentEntityToLaunch.transform.position = new Vector3(worldPoint.x, pos.y, pos.z);
         }
     }
