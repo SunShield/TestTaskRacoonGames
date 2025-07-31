@@ -18,6 +18,8 @@ namespace TestTask.Gameplay.Launching
         private string _launchedEntityKey;
         private EntityWithNumber _currentEntityToLaunch;
         private float _launchDelayTimer;
+        private Camera _camera;
+        private float _fingerPos;
         
         public bool IsLaunching { get; private set; }
         private BaseEntity LaunchedEntity => 
@@ -30,12 +32,12 @@ namespace TestTask.Gameplay.Launching
         {
             _launchedEntityKey = launchedEntityKey;
             _cubeSpawnZone = level.CubeSpawnZone.bounds;
+            _camera = Camera.main;
         }
 
         public void StartLaunching()
         {
             IsLaunching = true;
-            PrepareLaunchableEntity();
         }
 
         private async void PrepareLaunchableEntity()
@@ -80,27 +82,32 @@ namespace TestTask.Gameplay.Launching
             {
                 AdvanceLaunchTimer();
                 if (CooldowningLaunch) return;
-                PrepareLaunchableEntity();
             }
             
-#if UNITY_EDITOR
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                _currentEntityToLaunch.transform.position 
-                    += _currentEntityToLaunch.transform.right * Time.deltaTime * 5f;
-            }
+            if (Input.touchCount == 0) return;
 
-            if (Input.GetKey(KeyCode.LeftArrow))
+            ProcessTouch();
+        }
+
+        private void ProcessTouch()
+        {
+            var touch = Input.GetTouch(0);
+            switch (touch.phase)
             {
-                _currentEntityToLaunch.transform.position 
-                    -= _currentEntityToLaunch.transform.right * Time.deltaTime * 5f;
+                case TouchPhase.Began:
+                    PrepareLaunchableEntity();
+                    break;
+
+                case TouchPhase.Moved:
+                case TouchPhase.Stationary:
+                    MoveCubeWithFinger(touch);
+                    break;
+
+                case TouchPhase.Ended:
+                case TouchPhase.Canceled:
+                    TryLaunch();
+                    break;
             }
-            
-            if (Input.GetKeyDown(KeyCode.UpArrow))
-            {
-                TryLaunch();
-            }
-#endif
         }
 
         private void TryLaunch()
@@ -118,5 +125,17 @@ namespace TestTask.Gameplay.Launching
         }
         
         private void AdvanceLaunchTimer() => _launchDelayTimer = Mathf.Max(_launchDelayTimer- Time.deltaTime, 0f);
+        
+        private void MoveCubeWithFinger(Touch touch)
+        {
+            if (_currentEntityToLaunch == null)
+                return;
+
+            var screenPoint = new Vector3(touch.position.x, touch.position.y, 
+                _camera.WorldToScreenPoint(_currentEntityToLaunch.transform.position).z);
+            var worldPoint = _camera.ScreenToWorldPoint(screenPoint);
+            var pos = _currentEntityToLaunch.transform.position;
+            _currentEntityToLaunch.transform.position = new Vector3(worldPoint.x, pos.y, pos.z);
+        }
     }
 }

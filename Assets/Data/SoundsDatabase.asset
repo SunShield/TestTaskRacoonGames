@@ -22,3 +22,6 @@ MonoBehaviour:
   - Name: CubeLaunch
     Volume: 0.5
     Clip: {fileID: 8300000, guid: 0c4197aa9bcfa1342b350ffc05eaded9, type: 3}
+  - Name: Music1
+    Volume: 0.5
+    Clip: {fileID: 8300000, guid: 3531e5853bd9c5c46b95bca10788b7c9, type: 3}

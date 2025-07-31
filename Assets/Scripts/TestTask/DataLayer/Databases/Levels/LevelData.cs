@@ -10,6 +10,7 @@ namespace TestTask.DataLayer.Databases.Levels
         public Level Prefab;
         public string LaunchedEntityKey;
         public int SecondsToComplete;
+        public string MusicKey;
         // possibly, ScoreGoal
     }
 }

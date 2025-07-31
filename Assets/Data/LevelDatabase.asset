@@ -17,3 +17,4 @@ MonoBehaviour:
     Prefab: {fileID: 4870302735104373753, guid: 0b54d3bddf5fd494dba2a165881e6a92, type: 3}
     LaunchedEntityKey: BasicCube
     SecondsToComplete: 120
+    MusicKey: Music1

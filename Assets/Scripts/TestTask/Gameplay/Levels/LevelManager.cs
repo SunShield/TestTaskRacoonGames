@@ -4,6 +4,7 @@ using TestTask.DataLayer;
 using TestTask.DataLayer.Databases.Levels;
 using TestTask.Gameplay.Launching;
 using TestTask.Service.Classes;
+using TestTask.Sounds;
 using UnityEngine;
 
 namespace TestTask.Gameplay.Levels
@@ -24,6 +25,7 @@ namespace TestTask.Gameplay.Levels
             LevelInstance = Instantiate(LevelData.Prefab, _levelOrigin);
             EntityLauncher.Instance.Init(LevelInstance, LevelData.LaunchedEntityKey);
             TimeLeft = LevelData.SecondsToComplete;
+            SoundManager.Instance.PlayMusic(LevelData.MusicKey);
         }
 
         public async UniTask StartLevel()
