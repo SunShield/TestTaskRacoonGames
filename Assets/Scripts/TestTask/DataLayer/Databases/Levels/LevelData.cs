@@ -9,5 +9,7 @@ namespace TestTask.DataLayer.Databases.Levels
         public string Name;
         public Level Prefab;
         public string LaunchedEntityKey;
+        public int SecondsToComplete;
+        // possibly, ScoreGoal
     }
 }

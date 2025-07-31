@@ -39,6 +39,7 @@ namespace TestTask.UI.Base
             else
                 elementData = CreateUiElement(elementType);
              
+            if (order == UseDefaultOrder) order = elementData.order;
             AssignElementToContainer(elementData.element, order);
             return elementData.element;
         }
@@ -81,6 +82,7 @@ namespace TestTask.UI.Base
             if (!UiContainersMap.ContainsKey(order))
             {
                 var uiContainer = Instantiate(GameDataProvider.Instance.UiElementsDatabase.ContainerPrefab, _activeUi);
+                UiContainersMap.Add(order, uiContainer);
                 uiContainer.SetOrder(order);
             }
                 
